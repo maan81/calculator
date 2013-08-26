@@ -2,12 +2,14 @@
 <html>
 <head>
 	<link href="calculator.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src='jquery.js'></script>
+	<script type="text/javascript" src="calculator.js"></script>
 </head>
 <body>
 	<div id="calculator">
 		<div id="screen">
-			<div class="screen_part tmp_color" id="input"><input value="1234567890123"></div>
-			<div class="screen_part tmp_color" id="result"><span>1234567890123</span></div>
+			<div class="screen_part tmp_color" id="input"><input value=""></div>
+			<div class="screen_part tmp_color" id="result"><span></span></div>
 		</div>
 		<div id="keypad">
 			<div id="adv_fns">
@@ -27,9 +29,9 @@
 
 			<div id="basic_fns">
 				<div id="percent" class="basic_fn button tmp_color"><span>%</span></div>
-				<div id="multiply" class="basic_fn button tmp_color"><span>×</span></div>
+				<div id="multiply" class="basic_fn button tmp_color"><span>&multiply;</span></div>
 				<div id="plus" class="basic_fn button tmp_color"><span>+</span></div>
-				<div id="divide" class="basic_fn button tmp_color"><span>÷</span></div>
+				<div id="divide" class="basic_fn button tmp_color"><span>&divide;</span></div>
 				<div id="minus" class="basic_fn button tmp_color"><span>-</span></div>
 				<div id="equals" class="basic_fn button tmp_color"><span>=</span></div>
 			</div>
@@ -54,6 +56,5 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>
