@@ -92,3 +92,9 @@ div {
 #percent {
     float: right;
 }
+
+input {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    width: 96%;
+}
