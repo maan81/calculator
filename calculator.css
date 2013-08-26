@@ -1,12 +1,8 @@
+
 * {
+    -moz-user-select: none;
     margin: 0;
     padding: 0;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: -moz-none;
-    -ms-user-select: none;
-    user-select: none;
 }
 #calculator {
     background: none repeat scroll 0 0 #999999;
@@ -14,7 +10,7 @@
     height: 400px;
     padding: 10px;
     position: relative;
-    width: 360px;
+    width: 420px;
 }
 body {
     background: none repeat scroll 0 0 lightgray;
@@ -27,12 +23,11 @@ div {
     height: 150px;
     padding: 5px;
 }
-
 #input {
     background: none repeat scroll 0 0 yellow;
     height: 50px;
-    padding-left: 10px;
     line-height: 45px;
+    padding-left: 10px;
 }
 .screen_part {
     margin-bottom: 10px;
@@ -42,15 +37,14 @@ div {
     direction: rtl;
     font-size: 2.5em;
     height: 80px;
+    line-height: 80px;
     padding-left: 10px;
     padding-right: 10px;
-    line-height: 80px;
 }
 .tmp_color {
     background: none repeat scroll 0 0 yellow;
 }
 .number {
-    background: none repeat scroll 0 0 yellow;
     display: inline-block;
     height: 50px;
     margin-top: 5px;
@@ -59,9 +53,10 @@ div {
 }
 #numbers {
     background: none repeat scroll 0 0 #EEEEEE;
-    margin-top: 10px;
+    float: right;
+    margin-right: 5px;
     padding: 5px;
-    width: 220px;
+    width: 219px;
 }
 #basic_fns {
     background: none repeat scroll 0 0 #EEEEEE;
