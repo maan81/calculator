@@ -7,7 +7,7 @@
 #calculator {
     background: none repeat scroll 0 0 #999999;
     box-shadow: 10px 10px 5px #110022;
-    height: 530px;
+    height: 580px;
     padding: 10px;
     position: relative;
     width: 420px;
@@ -55,6 +55,7 @@ div {
     background: none repeat scroll 0 0 #EEEEEE;
     float: right;
     margin-right: 5px;
+    margin-top: 10px;
     padding: 5px;
     width: 219px;
 }
@@ -63,6 +64,7 @@ div {
     float: right;
     padding: 5px;
     width: 105px;
+    margin-top: 10px;
 }
 .basic_fn {
     height: 50px;
@@ -96,4 +98,33 @@ input {
     background: none repeat scroll 0 0 transparent;
     border: 0 none;
     width: 96%;
+}
+
+
+#primary_fns {
+    background: none repeat scroll 0 0 #EEEEEE;
+    margin-right: 5px;
+    margin-top: 10px;
+    padding: 2px;
+    width: 60px;
+}
+.primary_fn {
+    height: 50px;
+    margin: 5px;
+    text-align: center;
+    width: 50px;
+}
+
+.adv_fn {
+    display: inline-block;
+    height: 50px;
+    margin-top: 5px;
+    text-align: center;
+    width: 70px;
+}
+
+#adv_fns {
+    background: none repeat scroll 0 0 #EEEEEE;
+    padding: 5px;
+    margin-top: 10px;
 }
