@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#calculator {
+    background: none repeat scroll 0 0 #999999;
+    box-shadow: 10px 10px 5px #110022;
+    height: 400px;
+    padding: 10px;
+    position: relative;
+    width: 360px;
+}
+body {
+    background: none repeat scroll 0 0 lightgray;
+}
+div {
+    border-radius: 10px 10px 10px 10px;
+}
+#screen {
+    background: none repeat scroll 0 0 #EEEEEE;
+    height: 150px;
+    padding: 5px;
+}
+
+#input {
+    background: none repeat scroll 0 0 yellow;
+    height: 50px;
+    padding-left: 10px;
+    line-height: 45px;
+}
+.screen_part {
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+#result {
+    direction: rtl;
+    font-size: 2.5em;
+    height: 80px;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 80px;
+}
+.tmp_color {
+    background: none repeat scroll 0 0 yellow;
+}
+.number {
+    background: none repeat scroll 0 0 yellow;
+    display: inline-block;
+    height: 50px;
+    margin-top: 5px;
+    text-align: center;
+    width: 70px;
+}
+#numbers {
+    background: none repeat scroll 0 0 #EEEEEE;
+    margin-top: 10px;
+    padding: 5px;
+    width: 220px;
+}
+#basic_fns {
+    background: none repeat scroll 0 0 #EEEEEE;
+    float: right;
+    padding: 5px;
+    width: 105px;
+}
+.basic_fn {
+    background: none repeat scroll 0 0 yellow;
+    height: 50px;
+    margin-top: 5px;
+    text-align: center;
+    width: 50px;
+}
+#plus {
+    bottom: 85px;
+    float: right;
+    height: 100px;
+}
+.button {
+    cursor: pointer;
+    line-height: 45px;
+}
+.button:hover {
+    box-shadow: 0 0 2px 1px black;
+}
+.button:active {
+    box-shadow: 0 0 2px 1px black inset;
+}
+#equals {
+    width: 105px;
+}
+#percent {
+    float: right;
+}
