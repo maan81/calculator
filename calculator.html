@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="calculator.css"/>
+	<link href="calculator.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 	<div id="calculator">
 		<div id="screen">
-			<div id="input" class="screen_part tmp_color"><span>1234567890123</span></div>
-			<div id="result" class="screen_part tmp_color"><input value="1234567890123"></div>
+			<div class="screen_part tmp_color" id="input"><input value="1234567890123"></div>
+			<div class="screen_part tmp_color" id="result"><span>1234567890123</span></div>
 		</div>
 		<div id="keypad">
+			<div id="adv_fns">
+				<div class="adv_fn button tmp_color"><span>Sin</span></div>
+				<div class="adv_fn button tmp_color"><span>Cos</span></div>
+				<div class="adv_fn button tmp_color"><span>Tan</span></div>
+				<div class="adv_fn button tmp_color"><span>Log</span></div>
+				<div class="adv_fn button tmp_color"><span>e</span></div>
+				<div class="adv_fn button tmp_color"><span>hyp</span></div>
+				<div class="adv_fn button tmp_color"><span>sqrt</span></div>
+				<div class="adv_fn button tmp_color"><span>x^y</span></div>
+				<div class="adv_fn button tmp_color"><span>x-1</span></div>
+				<div class="adv_fn button tmp_color"><span>square</span></div>
+				<div class="adv_fn button tmp_color"><span>(</span></div>
+				<div class="adv_fn button tmp_color"><span>)</span></div>
+			</div>
+
 			<div id="basic_fns">
-				<div id="percent" class="basic_fn button"><span>%</span></div>
-				<div id="multiply" class="basic_fn button"><span>&times;</span></div>
-				<div id="plus" class="basic_fn button"><span>+</span></div>
-				<div id="divide" class="basic_fn button"><span>&divide;</span></div>
-				<div id="minus" class="basic_fn button"><span>-</span></div>
-				<div id="equals" class="basic_fn button"><span>=</span></div>
+				<div id="percent" class="basic_fn button tmp_color"><span>%</span></div>
+				<div id="multiply" class="basic_fn button tmp_color"><span>×</span></div>
+				<div id="plus" class="basic_fn button tmp_color"><span>+</span></div>
+				<div id="divide" class="basic_fn button tmp_color"><span>÷</span></div>
+				<div id="minus" class="basic_fn button tmp_color"><span>-</span></div>
+				<div id="equals" class="basic_fn button tmp_color"><span>=</span></div>
 			</div>
 			<div id="numbers" class="">
-				<div id="_7" class="number button"><span>7</span></div>
-				<div id="_8" class="number button"><span>8</span></div>
-				<div id="_9" class="number button"><span>9</span></div>
-				<div id="_4" class="number button"><span>4</span></div>
-				<div id="_5" class="number button"><span>5</span></div>
-				<div id="_6" class="number button"><span>6</span></div>
-				<div id="_1" class="number button"><span>1</span></div>
-				<div id="_2" class="number button"><span>2</span></div>
-				<div id="_3" class="number button"><span>3</span></div>
-				<div id="_0" class="number button"><span>0</span></div>
-				<div id="_." class="number button"><span>.</span></div>
+				<div id="_7" class="number button tmp_color"><span>7</span></div>
+				<div id="_8" class="number button tmp_color"><span>8</span></div>
+				<div id="_9" class="number button tmp_color"><span>9</span></div>
+				<div id="_4" class="number button tmp_color"><span>4</span></div>
+				<div id="_5" class="number button tmp_color"><span>5</span></div>
+				<div id="_6" class="number button tmp_color"><span>6</span></div>
+				<div id="_1" class="number button tmp_color"><span>1</span></div>
+				<div id="_2" class="number button tmp_color"><span>2</span></div>
+				<div id="_3" class="number button tmp_color"><span>3</span></div>
+				<div id="_0" class="number button tmp_color"><span>0</span></div>
+				<div id="_." class="number button tmp_color"><span>.</span></div>
 			</div>
 			<div id="primary_fns" class="">
 				<div id="c" class=" button tmp_color primary_fn"><span>C</span></div>
@@ -39,5 +54,6 @@
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>
