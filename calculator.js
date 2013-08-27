@@ -1,6 +1,8 @@
 var result=0;
 var disp='';
 var buffer=0;
+var times=$('<div/>').html('&times;').text();
+var divide=$('<div/>').html('&divide;').text();
 
 function display( disp){
 	$('input').val(disp);
@@ -26,6 +28,8 @@ function calc( disp){
 
 	arr = arr.slice();
 	for(var i in arr){
+
+
 		switch(arr[i]){
 
 			//case 08:$('#del').trigger('click');break;
@@ -33,8 +37,8 @@ function calc( disp){
 
 			case '+':	calc_plus(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
 			case '-':	calc_minus(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
-			case '×':	calc_mult(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
-			case '÷':	calc_div(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
+			case times:	calc_mult(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
+			case divide:calc_div(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
 			case '%':	calc_perc(arr[parseInt(i)-1]);break;
 
 
@@ -122,11 +126,11 @@ $(function(){
 		display(disp);
 	})
 	$('#multiply').click(function(){
-		disp += ' '+$('<div/>').html('&times;').text()+' ';
+		disp += ' '+times+' ';
 		display(disp);
 	})
 	$('#divide').click(function(){
-		disp += ' '+$('<div/>').html('&divide;').text()+' ';
+		disp += ' '+divide+' ';
 		display(disp);
 	})
 	$('#percent').click(function(){
@@ -136,6 +140,7 @@ $(function(){
 	$('#c').click(function(){
 		disp='';
 		display(disp);
+		$('#result').children('span').text('0');
 	})
 
 
