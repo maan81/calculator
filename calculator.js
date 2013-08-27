@@ -6,9 +6,64 @@ function display( disp){
 	$('input').val(disp);
 }
 
+function calc_sin(x){/*console.log(x);*/result = Math.sin(x);};
+function calc_tan(x){result = Math.tan(x);};
+function calc_cos(x){result = Math.cos(x);};
+function calc_inv(x){result = 1/x;};
+function calc_log(x){result = Math.log(x);};
+function calc_pi(){result = 3.141592654;};
+function calc_sqrt(x){result = Math.sqrt(x);};
+
+function calc_plus(x,y){result = x+y;};
+function calc_minus(x,y){result = x-y;};
+function calc_mult(x,y){result = x*y;};
+function calc_div(x,y){result = x/y;};
+function calc_perc(x){result = x/100;};
+
 function calc( disp){
 
-	$('#result').children('span').text('')
+	var arr = disp.split(' ');
+
+	var arr_copy = arr.slice();
+console.log(arr_copy)
+	for(var i in arr){
+		switch(arr[i]){
+
+			//case 08:$('#del').trigger('click');break;
+			//case 13:$('#equals').trigger('click');break;
+
+			case '+':	calc_plus(arr[i-1],arr[i+1]);break;
+			case '-':	calc_minus(arr[i-1],arr[i+1]);break;
+			case '×':	calc_mult(arr[i-1],arr[i+1]);break;
+			case '÷':	calc_div(arr[i-1],arr[i+1]);break;
+			case '%':	calc_perc(arr[i-1]);break;
+
+
+
+
+			case 'Sin':	
+				console.log(i)
+				console.log(arr_copy[i])		
+				console.log(arr_copy[i+1])		
+				console.log(arr_copy[i+2])		
+
+				calc_sin(arr_copy[i+1]);
+				break;
+			case 'Tan': calc_tan(arr[i+1]);break;
+			case 'Cos' :calc_cos(arr[i+1]);break;
+			//case 72:$('#hyp').trigger('click');break;
+			case '-1': calc_inv(arr[i-1]);break;
+			case 'Log': calc_log(arr[i+1]);break;
+			//case 77:$('#mem_p').trigger('click');break;
+			//case 78:$('#mem_c').trigger('click');break;
+			case 'π': 	calc_pi();break;
+			case '√': 	calc_sqrt(arr[i+1]);break;
+		}
+	}
+
+
+
+	$('#result').children('span').text(result);
 }
 
 
@@ -18,12 +73,29 @@ $(function(){
 	//bind keyboard letters
 	$(document).keyup(function(e){
 		switch(e.which){
+
+
+			case 08:$('#del').trigger('click');break;
+			case 13:$('#equals').trigger('click');break;
+			case 27:$('#c').trigger('click');break;
+
 			case 48:case 49:case 50:case 51:case 52:
 			case 53:case 54:case 55:case 56:case 57:
 				$('#_'+e.which).trigger('click');
 				break;
+
+			case 67:$('#cos').trigger('click');break;
+			case 72:$('#hyp').trigger('click');break;
+			case 73:$('#inv').trigger('click');break;
+			case 76:$('#log').trigger('click');break;
+			case 77:$('#mem_p').trigger('click');break;
+			case 78:$('#mem_c').trigger('click');break;
+			case 80:$('#pi').trigger('click');break;
+			case 81:$('#sqrt').trigger('click');break;
+			case 83:$('#sin').trigger('click');break;
+			case 84:$('#tan').trigger('click');break;
+
 			default:
-				console.log('u pressed a key')
 		}
 	});
 
@@ -48,74 +120,78 @@ $(function(){
 
 
 	$('#plus').click(function(){
-		disp += '+';
+		disp += ' + ';
 		display(disp);
 	})
 	$('#minus').click(function(){
-		disp += '-';
+		disp += ' - ';
 		display(disp);
 	})
 	$('#multiply').click(function(){
-		disp += '&multiply;';
+		disp += ' '+$('<div/>').html('&times;').text()+' ';
 		display(disp);
 	})
 	$('#divide').click(function(){
-		disp += '&divide;';
+		disp += ' '+$('<div/>').html('&divide;').text()+' ';
 		display(disp);
 	})
 	$('#percent').click(function(){
-		disp += '%';
+		disp += ' % ';
+		display(disp);
+	})
+	$('#c').click(function(){
+		disp='';
 		display(disp);
 	})
 
 
 
 	$('#sin').click(function(){
-		disp += 'Sin ';
+		disp += ' Sin ';
 		display(disp);
 	})
 	$('#cos').click(function(){
-		disp += 'Cos ';
+		disp += ' Cos ';
 		display(disp);
 	})
 	$('#tan').click(function(){
-		disp += 'Tan ';
+		disp += ' Tan ';
 		display(disp);
 	})
 	$('#log').click(function(){
-		disp += 'Log ';
+		disp += ' Log ';
 		display(disp);
 	})
 	$('#e').click(function(){
-		disp += 'e ';
+		disp += ' e ';
 		display(disp);
 	})
 	$('#hyp').click(function(){
-		disp += 'Hype ';
+		disp += ' Hyp ';
 		display(disp);
 	})
 	$('#sqrt').click(function(){
-		disp += 'Sqrt ';
+		disp += ' '+$('<div/>').html('&radic;').text()+' ';
 		display(disp);
 	})
 	$('#power').click(function(){
-		disp += '^ ';
+		disp += ' ^ ';
 		display(disp);
 	})
 	$('#inv').click(function(){
-		disp += '-1 ';
+		disp += ' -1 ';
 		display(disp);
 	})
 	$('#square').click(function(){
-		disp += '^2 ';
+		disp += ' '+$('<div/>').html('&sup2;').text()+' ';
 		display(disp);
 	})
 	$('#open').click(function(){
-		disp += '( ';
+		disp += ' ( ';
 		display(disp);
 	})
 	$('#close').click(function(){
-		disp += ') ';
+		disp += ' ) ';
 		display(disp);
 	})
 })
