@@ -6,58 +6,52 @@ function display( disp){
 	$('input').val(disp);
 }
 
-function calc_sin(x){/*console.log(x);*/result = Math.sin(x);};
-function calc_tan(x){result = Math.tan(x);};
-function calc_cos(x){result = Math.cos(x);};
-function calc_inv(x){result = 1/x;};
-function calc_log(x){result = Math.log(x);};
+function calc_sin(x){result = Math.sin(eval(x));};
+function calc_tan(x){result = Math.tan(eval(x));};
+function calc_cos(x){result = Math.cos(eval(x));};
+function calc_inv(x){result = 1/eval(x);};
+function calc_log(x){result = Math.log(eval(x));};
 function calc_pi(){result = 3.141592654;};
-function calc_sqrt(x){result = Math.sqrt(x);};
+function calc_sqrt(x){result = Math.sqrt(eval(x));};
 
-function calc_plus(x,y){result = x+y;};
-function calc_minus(x,y){result = x-y;};
-function calc_mult(x,y){result = x*y;};
-function calc_div(x,y){result = x/y;};
-function calc_perc(x){result = x/100;};
+function calc_plus(x,y){result = eval(x)+eval(y);};
+function calc_minus(x,y){result= eval(x)-eval(y);};
+function calc_mult(x,y){result = eval(x)*eval(y);};
+function calc_div(x,y){	result = eval(x)/eval(y);};
+function calc_perc(x){	result = eval(x)/100;};
 
 function calc( disp){
 
 	var arr = disp.split(' ');
 
-	var arr_copy = arr.slice();
-console.log(arr_copy)
+	arr = arr.slice();
 	for(var i in arr){
 		switch(arr[i]){
 
 			//case 08:$('#del').trigger('click');break;
 			//case 13:$('#equals').trigger('click');break;
 
-			case '+':	calc_plus(arr[i-1],arr[i+1]);break;
-			case '-':	calc_minus(arr[i-1],arr[i+1]);break;
-			case '×':	calc_mult(arr[i-1],arr[i+1]);break;
-			case '÷':	calc_div(arr[i-1],arr[i+1]);break;
-			case '%':	calc_perc(arr[i-1]);break;
+			case '+':	calc_plus(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
+			case '-':	calc_minus(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
+			case '×':	calc_mult(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
+			case '÷':	calc_div(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
+			case '%':	calc_perc(arr[parseInt(i)-1]);break;
 
 
 
 
 			case 'Sin':	
-				console.log(i)
-				console.log(arr_copy[i])		
-				console.log(arr_copy[i+1])		
-				console.log(arr_copy[i+2])		
-
-				calc_sin(arr_copy[i+1]);
+				calc_sin(arr[parseInt(i)+1]);
 				break;
-			case 'Tan': calc_tan(arr[i+1]);break;
-			case 'Cos' :calc_cos(arr[i+1]);break;
+			case 'Tan': calc_tan(arr[parseInt(i)+1]);break;
+			case 'Cos' :calc_cos(arr[parseInt(i)+1]);break;
 			//case 72:$('#hyp').trigger('click');break;
-			case '-1': calc_inv(arr[i-1]);break;
-			case 'Log': calc_log(arr[i+1]);break;
+			case '-1': calc_inv(arr[parseInt(i)-1]);break;
+			case 'Log': calc_log(arr[parseInt(i)+1]);break;
 			//case 77:$('#mem_p').trigger('click');break;
 			//case 78:$('#mem_c').trigger('click');break;
 			case 'π': 	calc_pi();break;
-			case '√': 	calc_sqrt(arr[i+1]);break;
+			case '√': 	calc_sqrt(arr[parseInt(i)+1]);break;
 		}
 	}
 
