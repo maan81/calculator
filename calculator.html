@@ -1,85 +1,132 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<link href="calculator.css" type="text/css" rel="stylesheet">
-	<script type="text/javascript" src='jquery.js'></script>
+	<script type="text/javascript" src='jquery-2.0.3.min.js'></script>
 	<script type="text/javascript" src="calculator.js"></script>
+	<link rel="stylesheet" type="text/css" href="calculator.css"/>
+	<title>Calculator</title>
 </head>
 <body>
-	<div id="calculator">
-		<div id="screen">
-			<div class="screen_part tmp_color" id="input"><input value=""></div>
-			<div class="screen_part tmp_color" id="result"><span></span></div>
-		</div>
-		<div id="keypad">
-			<div id="adv_fns">
-				<div id="sin" class="adv_fn button tmp_color" title="(S)ine">
-					<span>Sin</span></div>
-				<div id="cos" class="adv_fn button tmp_color" title="(C)osine">
-					<span>Cos</span></div>
-				<div id="tan" class="adv_fn button tmp_color" title="(T)angent">
-					<span>Tan</span></div>
-				<div id="log" class="adv_fn button tmp_color" title="(L)ogarithm">
-					<span>Log</span></div>
-				<div id="e" class="adv_fn button tmp_color" title="(e)">
-					<span>e<sup>x</sup></span></div>
-				<div id="hyp" class="adv_fn button tmp_color" title="(H)yperbolic">
-					<span>hyp</span></div>
-				<div id="sqrt" class="adv_fn button tmp_color" title="S(q)uare Root">
-					<span>&radic;</span></div>
-				<div id="power" class="adv_fn button tmp_color" title="Power(^)">
-					<span>x<sup>^y</sup></span></div>
-				<div id="inv" class="adv_fn button tmp_color" title="(I)nverse">
-					<span>x<sup>-1</sup></span></div>
-				<div id="square" class="adv_fn button tmp_color" title="S(q)uare">
-					<span>X<sup>2</sup></span></div>
-				<div id="open" class="adv_fn button tmp_color" title="(">
-					<span>(</span></div>
-				<div id="close" class="adv_fn button tmp_color" title=")">
-					<span>)</span></div>
-				<div id="pi" class="adv_fn button tmp_color" title="(P)i">
-					<span>&pi;</span></div>
-			</div>
 
-			<div id="basic_fns">
-				<div id="percent" class="basic_fn button tmp_color" title="(%)"><span>%</span></div>
-				<div id="multiply" class="basic_fn button tmp_color" title="&times;(*)"><span>&times;</span></div>
-				<div id="plus" class="basic_fn button tmp_color" title="(+)"><span>+</span></div>
-				<div id="divide" class="basic_fn button tmp_color" title="&divide;(/)"><span>&divide;</span></div>
-				<div id="minus" class="basic_fn button tmp_color" title="(-)"><span>-</span></div>
-				<div id="equals" class="basic_fn button tmp_color" title="=(Enter)"><span>=</span></div>
-			</div>
-			<div id="numbers" class="">
-				<div id="_55" class="number button tmp_color" title="7">
-					<span>7</span></div>
-				<div id="_56" class="number button tmp_color" title="8">
-					<span>8</span></div>
-				<div id="_57" class="number button tmp_color" title="9">
-					<span>9</span></div>
-				<div id="_52" class="number button tmp_color" title="4">
-					<span>4</span></div>
-				<div id="_53" class="number button tmp_color" title="5">
-					<span>5</span></div>
-				<div id="_54" class="number button tmp_color" title="6">
-					<span>6</span></div>
-				<div id="_49" class="number button tmp_color" title="1">
-					<span>1</span></div>
-				<div id="_50" class="number button tmp_color" title="2">
-					<span>2</span></div>
-				<div id="_51" class="number button tmp_color" title="3">
-					<span>3</span></div>
-				<div id="_48" class="number button tmp_color" title="0">
-					<span>0</span></div>
-				<div id="_." class="number button tmp_color" title=".">
-					<span>.</span></div>
-			</div>
-			<div id="primary_fns" class="">
-				<div id="c" class=" button tmp_color primary_fn" title="Clear(esc)"><span>C</span></div>
-				<div id="del" class="button tmp_color primary_fn" title="Delete(Backspace)"><span>Del</span></div>
-				<div id="mem_p" class=" button tmp_color primary_fn" title="(M)emory Add"><span>M+</span></div>
-				<div id="men_c" class=" button tmp_color primary_fn" title="Memory Clear"><span>MC</span></div>
-			</div>
+	<div id="calculator_wrapper">
+		<div id="calculator">
+
+			<!--<span id="close" onclick="return close_calc()">X</span>-->
+			<table>
+				<tr>
+					<td>
+						<form onsubmit="return false;">
+							<button style='position:fixed;left:-100%;' ></button>
+							<table align="center" cellpadding="10">
+								<tr>
+									<td>
+										<div id="calinfoout" onkeyup="onup(event)" onkeydown="ondown(event)">
+											<div class="calinfoinner">
+												<div id='enterString_wrapper'>
+													<div id="enterString" name="input" tabindex="0" ></div>	
+												</div>
+												<input type="text" name="input" size="16" id="calInfoOutPut" onclick="this.focus()" 
+														maxlength="16" value="0" readonly='readonly'/>
+												<hr/>
+													
+												<div id="modes_selector">
+													<label for="sci_selector" onclick="change_selector('sci')">
+														<input type="radio" class="mode_selector" name="mode" value="sci_selector" 
+																id="sci_selector"/>
+														Scientific
+													</label>
+
+													<label for="stat_selector" onclick="change_selector('stat')">
+														<input type="radio" class="mode_selector" name="mode" value="stat"
+																id="stat_selector" />
+														Statics
+													</label>
+													
+													<label for="basic_selector" onclick="change_selector('basic')">
+														<input type="radio" class="mode_selector" name="mode" value="basic"
+																id="basic_selector" checked="checked"/>
+														Basic
+													</label>
+												</div>
+
+												<hr/>
+
+												<div id="scientific">
+													<button onclick="key_p('sin')" class="calinfofunc" >sin</button>
+													<button onclick="key_p('cos')" class="calinfofunc" >cos</button>
+													<button onclick="key_p('tan')" class="calinfofunc" >tan</button>
+													<button onclick="key_p('ln')" class="calinfofunc">ln</button>
+													<button onclick="key_p('log')" class="calinfofunc">log</button>
+													<button onclick="key_p('asin')" class="calinfofunc">asin</button>
+													<button onclick="key_p('acos')" class="calinfofunc">acos</button>
+													<button onclick="key_p('atan')" class="calinfofunc">atan</button>
+													<button onclick="key_p('ex')" class="calinfofunc">e<sup>x</sup></button>
+													<button onclick="key_p('10x')" class="calinfofunc">10<sup>x</sup></button>
+													<button onclick="key_p('pow')" class="calinfofunc">x<sup>y</sup></button>
+													<button onclick="key_p('1/x')" class="calinfofunc">x<sup>-1</sup></button>
+													<button onclick="key_p('x2')" class="calinfofunc">x<sup>2</sup></button>
+													<button onclick="key_p('x3')" class="calinfofunc">x<sup>3</sup></button>
+													<button onclick="key_p('e')" class="calinfofunc">e</button>
+													<button onclick="key_p('pi')" class="calinfofunc">&pi;</button>
+													<button onclick="key_p('y_root_x')" class="calinfofunc">y&radic;x</button>
+													<button onclick="key_p('3_root_x')" class="calinfofunc">3&radic;x</button>
+													<button onclick="key_p('sqrt')" class="calinfofunc">&radic;x</button>
+													<button onclick="key_p('%')" class="calinfofunc">%</button>
+													<button onclick="key_p('(')" class="calinfofunc" >(</button>
+													<button onclick="key_p(')')" class="calinfofunc" >)</button>
+													<button onclick="key_p('x!')" class="calinfofunc">n!</button>
+													<hr>
+												</div>
+
+												<div id="stat">
+													<hr/>
+												</div>
+
+												<button onclick="key_p('MS')" class="calinfoop">MS</button>
+												<button onclick="key_p(7)" class="calinfonm">7</button>
+												<button onclick="key_p(8)" class="calinfonm">8</button>
+												<button onclick="key_p(9)" class="calinfonm">9</button>
+												<button onclick="key_p('C')" class="calinfoeq">C</button
+												<br />
+												<button onclick="key_p('M+')" class="calinfoop">M+</button>
+												<button onclick="key_p(4)" class="calinfonm">4</button>
+												<button onclick="key_p(5)" class="calinfonm">5</button>
+												<button onclick="key_p(6)" class="calinfonm">6</button>
+												<button onclick="key_p('/')" class="calinfoop">&divide;</button>
+												<button onclick="key_p('M-')" class="calinfoop">M-</button>
+												<button onclick="key_p(1)" class="calinfonm">1</button>
+												<button onclick="key_p(2)" class="calinfonm">2</button>
+												<button onclick="key_p(3)" class="calinfonm">3</button>
+												<button onclick="key_p('*')" class="calinfoop">&times;</button>
+												<button onclick="key_p('MR')" class="calinfoop">MR</button>
+												<button onclick="key_p(0)" class="calinfonm">0</button>
+												<button onclick="key_p('.')" class="calinfonm">.</button>
+												<button onclick="key_p('exp')" class="calinfoop">EXP</button>
+												<button onclick="key_p('-')" class="calinfoop">-</button>
+												<br />
+												<button onclick="key_p('MC')" class="calinfoop">MC</button>
+												<button onclick="key_p('+/-')" class="calinfoop">&plusmn;</button>
+												<button onclick="key_p('rnd')" class="calinfoop">RND</button>
+												<button onclick="key_p('=')" class="calinfoeq" id='enterBtn'>=</button>
+												<button onclick="key_p('+')" class="calinfoop">+</button>
+												<br />
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
+
+	<!--<a href='#' onclick="return show_calc()">show calc</a>-->
+
+	<script type="text/javascript">
+		document.getElementById('modes_selector').children[2].onclick();
+		show_calc();
+	</script>
+
 </body>
 </html>

@@ -1,130 +1,148 @@
+#calculator_wrapper
+#calinfoout {
+	background-color:#EEE;
+	width:275px;
+}
 
-* {
-    -moz-user-select: none;
-    margin: 0;
-    padding: 0;
+#calculator_wrapper .calinfoinner {
+	border-top:1px solid #262626;
+	border-left:1px solid #262626;
+	border-right:2px outset #262626;
+	border-bottom:2px outset #262626;
+	padding:5px;
 }
-#calculator {
-    background: none repeat scroll 0 0 #999999;
-    box-shadow: 10px 10px 5px #110022;
-    height: 580px;
-    padding: 10px;
-    position: relative;
-    width: 420px;
+
+
+#calculator_wrapper #calinfoout #enterString_wrapper {
+    border: 1px solid black;
+    margin: 2px;
+    overflow: hidden;
+    width: 257px;
 }
-body {
-    background: none repeat scroll 0 0 lightgray;
+#calculator_wrapper #calinfoout #enterString {
+    background-color: #B8C6A3;
+    color: #000000;
+    cursor: text;
+    font-family: arial,helvetica,sans-serif;
+    font-size: 15px;
+    height: 25px;
+    line-height: 25px;
+    padding: 3px;
+    text-align: left;
+    width: 999px;
 }
-div {
+
+#calculator_wrapper #calinfoout input,button {
+	width:45px;
+	height:28px;
+	background-color:#FFF;
+	font-family:arial,helvetica,sans-serif;
+	font-size:14px;
+	border:1px solid #262626;
+	margin:2px;
+}
+#calculator_wrapper #calinfoout button:disabled {
+	background-color:#bbb;
+	color:#555;
+	cursor:no-drop;
+}
+#calculator_wrapper #calinfoout button {
+	cursor:pointer;
+}
+#calculator_wrapper #calinfoout .mode_selector {
+    width: auto;
+    height:auto;
+}
+#calculator_wrapper #modes_selector label {
+    padding-right: 5px;
+}
+
+#calculator_wrapper #calinfoout #calInfoOutPut {
+	width:259px;
+	height: 55px;
+	font-size:28px;
+	cursor:text;
+	text-align:right;
+	background-color:#B8C6A3;
+	color:#000;
+	padding:3px;
+}
+
+#calculator_wrapper #calinfoout .calinfonm {
+	color:#FFF;
+	font-weight:700;
+	background-color:#262626;
+}
+
+#calculator_wrapper #calinfoout .calinfoop {
+	color:#262626;
+	font-weight:700;
+	background-color:#ccc;
+}
+
+#calculator_wrapper #calinfoout .calinfoeq {
+	color:red;
+	font-weight:700;
+	background-color:#DCADB0;
+}
+
+#calculator_wrapper #calinfoout .calinfofunc {
+	color:#185290;
+	font-weight:700;
+	background-color:#C8D8E8;
+	height:23px;
+	padding-bottom:1px;
+}
+
+#calculator_wrapper #scientific{
+	border:0;
+	padding:0;
+}
+
+
+#calculator_wrapper #overlay {
+    background: none repeat scroll 0 0 black;
+    height: 100%;
+    left: 0;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+    display: none;
+}
+
+
+#calculator_wrapper #calculator {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid black;
     border-radius: 10px 10px 10px 10px;
+    display: none;
+    height: auto;
+    left: 50%;
+    margin-left: -25%;
+    position: absolute;
+    z-index: 10;
 }
-#screen {
-    background: none repeat scroll 0 0 #EEEEEE;
-    height: 150px;
-    padding: 5px;
-}
-#input {
-    background: none repeat scroll 0 0 yellow;
-    height: 50px;
-    line-height: 45px;
-    padding-left: 10px;
-}
-.screen_part {
-    margin-bottom: 10px;
-    margin-top: 5px;
-}
-#result {
-    direction: rtl;
-    font-size: 2.5em;
-    height: 80px;
-    line-height: 80px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-.tmp_color {
-    background: none repeat scroll 0 0 yellow;
-}
-.number {
-    display: inline-block;
-    height: 50px;
-    margin-top: 5px;
-    text-align: center;
-    width: 70px;
-}
-#numbers {
-    background: none repeat scroll 0 0 #EEEEEE;
-    float: right;
-    margin-right: 5px;
-    margin-top: 10px;
-    padding: 5px;
-    width: 219px;
-}
-#basic_fns {
-    background: none repeat scroll 0 0 #EEEEEE;
-    float: right;
-    padding: 5px;
-    width: 105px;
-    margin-top: 10px;
-}
-.basic_fn {
-    height: 50px;
-    margin-top: 5px;
-    text-align: center;
-    width: 50px;
-}
-#plus {
-    bottom: 85px;
-    float: right;
-    height: 100px;
-}
-.button {
+
+
+#calculator_wrapper #close {
+    border: 1px solid black;
+    border-radius: 10px 10px 10px 10px;
     cursor: pointer;
-    line-height: 45px;
-}
-.button:hover {
-    box-shadow: 0 0 2px 1px black;
-}
-.button:active {
-    box-shadow: 0 0 2px 1px black inset;
-}
-#equals {
-    width: 105px;
-}
-#percent {
-    float: right;
+    height: 12px;
+    padding: 0 4px 5px;
+    z-index: 10;
+    right: 0;
+    position: absolute;
 }
 
-input {
-    background: none repeat scroll 0 0 transparent;
-    border: 0 none;
-    width: 96%;
+#calculator_wrapper #calculator>table{
+	position: relative;
+	top: 0;		
 }
 
-
-#primary_fns {
-    background: none repeat scroll 0 0 #EEEEEE;
-    margin-right: 5px;
-    margin-top: 10px;
-    padding: 2px;
-    width: 60px;
-}
-.primary_fn {
-    height: 50px;
-    margin: 5px;
-    text-align: center;
-    width: 50px;
-}
-
-.adv_fn {
-    display: inline-block;
-    height: 50px;
-    margin-top: 5px;
-    text-align: center;
-    width: 70px;
-}
-
-#adv_fns {
-    background: none repeat scroll 0 0 #EEEEEE;
-    padding: 5px;
-    margin-top: 10px;
+#calculator_wrapper #modes_selector * {
+ 	font-family:arial,helvetica,sans-serif;
+	font-size:12px;
 }

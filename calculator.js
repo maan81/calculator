@@ -1,197 +1,495 @@
-var result=0;
-var disp='';
-var buffer=0;
-var times=$('<div/>').html('&times;').text();
-var divide=$('<div/>').html('&divide;').text();
-
-function display( disp){
-	$('input').val(disp);
+var isOperator;
+var compute_arr=[];
+function gen_esp_char(esp_char){
+	var e = document.createElement('div')
+	e.innerHTML=esp_char
+	return e.textContent
+}
+function gen_html_ele(html_code,html_char){
+	var ele=document.createElement(html_code);
+	var node=document.createTextNode(html_char);
+	ele.appendChild(node);
+	return ele;
+}
+function factorial(n){
+	//throw err if n is not int
+	if (n <= 1) return 1;
+	return n*factorial(n-1);
 }
 
-function calc_sin(x){result = Math.sin(eval(x));};
-function calc_tan(x){result = Math.tan(eval(x));};
-function calc_cos(x){result = Math.cos(eval(x));};
-function calc_inv(x){result = 1/eval(x);};
-function calc_log(x){result = Math.log(eval(x));};
-function calc_pi(){result = 3.141592654;};
-function calc_sqrt(x){result = Math.sqrt(eval(x));};
+function compute(){
+	correct_close_brackets();
 
-function calc_plus(x,y){result = eval(x)+eval(y);};
-function calc_minus(x,y){result= eval(x)-eval(y);};
-function calc_mult(x,y){result = eval(x)*eval(y);};
-function calc_div(x,y){	result = eval(x)/eval(y);};
-function calc_perc(x){	result = eval(x)/100;};
+	var result=0;
+	if(compute_arr.length){
+		result=eval(calc(compute_arr)[0]);
+		result = (result!==undefined)?parseFloat(result.toPrecision(10)):'Error';
+	}
 
-function calc( disp){
-
-	var arr = disp.split(' ');
-
-	arr = arr.slice();
-	for(var i in arr){
+	$('#calInfoOutPut').val(result);
+}
 
 
-		switch(arr[i]){
+function calc(Varr){
+	console.log('in calc fn : '+Varr)
+	var tmpVarr = [];
 
-			//case 08:$('#del').trigger('click');break;
-			//case 13:$('#equals').trigger('click');break;
+	// constants ...
+	if(Varr[0]==='pi'){
+		Varr[0] = 'Math.PI';
+	}
+	if(Varr[0]==='e'){
+		Varr[0] = 'Math.E';
+	}
+	if(Varr[0]==='rnd'){
+		Varr[0] = 'Math.random()';
+	}
 
-			case '+':	calc_plus(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
-			case '-':	calc_minus(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
-			case times:	calc_mult(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
-			case divide:calc_div(arr[parseInt(i)-1],arr[parseInt(i)+1]);break;
-			case '%':	calc_perc(arr[parseInt(i)-1]);break;
-
-
-
-
-			case 'Sin':	
-				calc_sin(arr[parseInt(i)+1]);
-				break;
-			case 'Tan': calc_tan(arr[parseInt(i)+1]);break;
-			case 'Cos' :calc_cos(arr[parseInt(i)+1]);break;
-			//case 72:$('#hyp').trigger('click');break;
-			case '-1': calc_inv(arr[parseInt(i)-1]);break;
-			case 'Log': calc_log(arr[parseInt(i)+1]);break;
-			//case 77:$('#mem_p').trigger('click');break;
-			//case 78:$('#mem_c').trigger('click');break;
-			case 'π': 	calc_pi();break;
-			case '√': 	calc_sqrt(arr[parseInt(i)+1]);break;
+	// single fn/digit
+	if(Varr.length===1){
+		if(Varr[0]==='pi'){
+			return ['Math.PI'];
 		}
+		if(Varr[0]==='e'){
+			return ['Math.E'];
+		}
+		if(Varr[0]==='rnd'){
+			return ['Math.random()'];
+		}
+		return [Varr[0]];
 	}
 
 
+	var j=0;
 
-	$('#result').children('span').text(result);
+	// open bracket
+	if(Varr[0]==='('){
+
+		j=eq_close_bracket(Varr,0);
+		Varr[0] = '('+calc(Varr.slice(1,j))+')';
+		Varr.splice(1,j);
+		return calc(Varr);
+	}
+
+	// prefns
+	if( Varr[0]==='sin' ||Varr[0]==='cos' ||Varr[0]==='tan' ||
+		Varr[0]==='asin'||Varr[0]==='acos'||Varr[0]==='atan'||
+		Varr[0]==='ln'  ||Varr[0]==='log' ||Varr[0]==='ex'  ||
+		Varr[0]==='10x' ||Varr[0]==='3_root_x'|| Varr[0]==='sqrt')
+	{
+
+		j=eq_close_bracket(Varr,1);
+		switch (Varr[0]){
+			case 'sin' :  case 'cos'  : case 'tan' :
+			case 'asin' : case 'acos' : case 'atan':
+				Varr[0] = 'Math.'+Varr[0]+'('+calc(Varr.slice(1,j+1))+')';
+				break;
+
+			case 'ln' : 
+				Varr[0] = 'Math.log('+calc(Varr.slice(1,j+1))+')/Math.log(Math.E)'; 
+				break;
+
+			case 'log' :
+				Varr[0] = 'Math.log('+calc(Varr.slice(1,j+1))+')/Math.LN10'; 
+				break;
+
+			case 'ex' :
+				Varr[0] = 'Math.exp('+calc(Varr.slice(1,j+1))+')'; 
+				break;
+
+			case '10x' :
+			 	Varr[0] = 'Math.pow(10,'+calc(Varr.slice(1,j+1))+')';
+				break;
+
+	 		case 'sqrt' :
+	 			Varr[0] = 'Math.sqrt('+calc(Varr.slice(1,j+1))+')';
+	 			break;
+
+		 	case '3_root_x' :
+		 		Varr[0] = 'Math.pow('+calc(Varr.slice(1,j+1))+', 1/3)'; 
+		 		break;
+		}
+		Varr.splice(1,j);
+		return calc(Varr);
+	}
+
+	//postfns
+	if( Varr[1]==='1/x'||Varr[1]==='x2'||Varr[1]==='x3'||Varr[1]==='x!'){
+		j=eq_close_bracket(Varr,2);
+		switch(Varr[1]){
+			case '1/x': Varr[0] = 'Math.pow('+Varr[0]+',-1)';break;
+			case 'x2' : Varr[0] = 'Math.pow('+Varr[0]+',2)';break;
+			case 'x3' : Varr[0] = 'Math.pow('+Varr[0]+',3)';break;
+			case 'x!' : Varr[0] = 'factorial('+Varr[0]+')';break;
+		}
+		Varr.splice(1,1);
+		return calc(Varr);
+	}
+
+	//prepost
+	if( Varr[1]==='pow' || Varr[1]==='y_root_x'){
+		j=eq_close_bracket(Varr,2);
+		switch(Varr[1]){
+			case 'pow':
+				Varr[0] = 'Math.pow('+Varr[0]+','+calc(Varr.slice(2,j+1))+')';
+				//console.log(Varr)
+				break;
+			case 'x_root_y':
+				Varr[0] = 'Math.pow('+calc(Varr.slice(2,j))+',1/'+Varr[0]+')';
+				break;
+		}
+
+		Varr.splice(1,j+1);
+		return calc(Varr);
+
+	}
+
+
+	// + - * / 
+	if( Varr[1]==='+'||Varr[1]==='-'||Varr[1]==='*'||Varr[1]==='/'){
+		Varr[0] += Varr[1];
+		Varr.splice(1,1);
+		j=eq_close_bracket(Varr,1);
+		tmpVarr = Varr.slice(1,j+1);
+		Varr[0]+=calc(tmpVarr);
+		Varr.splice(1,j);
+
+		return Varr;
+	}
+	// %
+	if(Varr[1]==='%'){
+		Varr[0] += '/100';
+		Varr.splice(1,1);
+		return calc(Varr);
+	}
+
+
+	return -1;//use try-catch-throw instead
+}
+
+/*
+ *	param array of expression
+ *	param reqd. start 
+ *  returns closing bracket positon in the array
+ */
+function eq_close_bracket(Arr,startIndex){
+
+	if(startIndex===Arr.length){return startIndex;}
+
+	var count=0;
+	for(i=startIndex;i<Arr.length;i++){
+		if(Arr[i]==='('){
+			count++;
+			continue;
+		}
+		if(Arr[i]===')'){
+			count--;
+
+			if(count===0 && Arr[startIndex]==='('){
+				return i;
+			}
+
+			if(count<0 && Arr[startIndex]!=='('){
+				return i-1;
+			} 
+		}
+	}
+	return Arr.length-1;
+}
+
+function key_p(A){
+	console.log(compute_arr)
+
+	switch(A){
+		case '(':case ')':
+			$('#enterString').html($('#enterString').html()+' '+A+' ');
+			compute_arr.push(A)
+			isOperator=true;
+			break;
+
+		//fns post
+		case '1/x': 
+			$('#enterString').html($('#enterString').html()+' <sup>-1</sup> ');
+			compute_arr.push(A)
+			isOperator=true;
+			break;
+		case 'x2':  
+			$('#enterString').html($('#enterString').html()+' <sup>2</sup> ');
+			compute_arr.push(A)
+			isOperator=true;
+			break;
+		case 'x3':  
+			$('#enterString').html($('#enterString').html()+' <sup>3</sup> ');
+			compute_arr.push(A)
+			isOperator=true;
+			break;
+
+		//case '3x':  custom_A = gen_html_ele('sup','3')+gen_html_ele('span','&radic;'); break;
+		case 'x!':
+			$('#enterString').html($('#enterString').html()+'! ');
+			compute_arr.push(A)
+			isOperator=true;
+			break;
+		case '%':
+			$('#enterString').html($('#enterString').html()+'% ');
+			compute_arr.push(A)
+			isOperator=true;
+			break;
+
+		//fns pre
+		case 'ex': 
+			$('#enterString').html($('#enterString').html()+' e^ ( ');
+			compute_arr.push(A);
+			compute_arr.push('(');
+			isOperator=true;
+			break;
+		case '10x'	: 
+			$('#enterString').html($('#enterString').html()+' 10^ ( ');
+			compute_arr.push(A)
+			compute_arr.push('(');
+			isOperator=true;
+			break;
+		case '3x'	: 
+			$('#enterString').html($('#enterString').html()+' 3^ ( ');
+			compute_arr.push(A)
+			compute_arr.push('(');
+			isOperator=true;
+			break;
+
+		case 'sqrt':
+			$('#enterString').html($('#enterString').html()+' &radic; ( ');
+			compute_arr.push(A)
+			compute_arr.push('(');
+			isOperator=true;
+			break;
+		case 'sin': case 'cos' 	: case 'tan': case 'asin': 
+		case 'acos':case 'atan'	: case 'ln'	: case 'log': 
+			$('#enterString').html($('#enterString').html()+' '+A+' ( ');
+			compute_arr.push(A)
+			compute_arr.push('(');
+			isOperator=true;
+			break;
+		case '3_root_x':
+			$('#enterString').html($('#enterString').html()+' 3&radic; (');
+			compute_arr.push(A)
+			compute_arr.push('(');
+			isOperator=true;
+			break;
+
+		//fns prepost
+		case 'pow': 
+			$('#enterString').html($('#enterString').html()+' ^ (');
+			compute_arr.push(A)
+			compute_arr.push('(');
+			isOperator=true;
+			break;
+		case 'apow':
+			$('#enterString').html(' ^ (');
+			compute_arr.push(A)
+			compute_arr.push('(');
+			isOperator=true;
+			break;
+		case 'y_root_x':
+			$('#enterString').html($('#enterString').html()+' &radic; (');
+			compute_arr.push(A)
+			compute_arr.push('(');
+			isOperator=true;
+			break;
+
+		//consts.
+		case 'pi':
+			$('#enterString').html($('#enterString').html()+' &pi; ');
+			compute_arr.push(A)
+			isOperator=true;
+			break;
+		case 'e':
+		case 'rnd':
+			$('#enterString').html($('#enterString').html()+' '+A+' ');
+			compute_arr.push(A)
+			isOperator=true;
+			break;
+
+		//numbers
+		case 0:case 1:case 2:case 3:case 4:
+		case 5:case 6:case 7:case 8:case 9:case '.':
+			A = A.toString()
+
+			//after operator
+			if(isOperator){
+				$('#enterString').text($('#enterString').text()+' '+A);
+				compute_arr.push(A)
+
+			//after numeric
+			}else{
+				$('#enterString').text($('#enterString').text()+A);
+
+				if(compute_arr.length){
+					compute_arr[compute_arr.length-1]=compute_arr[compute_arr.length-1]+A
+				}else{
+					compute_arr.push(A)
+				}
+			}
+
+			isOperator=false;
+			break;
+
+		//fns prepost
+		case '+':case '-':case '*':case '/':
+			var html_A='';
+			switch(A){
+				case '*': html_A=gen_esp_char('&times;'); break;
+				case '/': html_A=gen_esp_char('&divide;'); break;
+				case '+':case '-':html_A=A; break;
+			}
+			$('#enterString').html($('#enterString').html()+' '+html_A+' ');
+			compute_arr.push(A)
+			isOperator=true;
+			break;
+
+		case '+/-':
+			$('#enterString').html($('#enterString').html()+' -');
+			compute_arr.push('-');
+			isOperator=false;
+			break;
+
+		case '=':
+			compute();
+			break;
+
+		case "C":
+			$('#enterString').html('');
+			$('#calInfoOutPut').val('0');
+			compute_arr=[];
+			break;
+	}
+	document.getElementById('enterBtn').focus();
+	return false;
+}
+
+function change_selector(mode){
+	switch(mode){
+		case 'sci':
+			document.getElementById('stat').style.display = 'none';
+			document.getElementById('scientific').style.display = 'block';
+			break;
+		case 'stat':
+			document.getElementById('scientific').style.display = 'none';
+			document.getElementById('stat').style.display = 'block';
+			break;
+		case 'basic': default:
+			document.getElementById('stat').style.display = 'none'
+			document.getElementById('scientific').style.display = 'none'
+	}
+}
+function show_calc(){
+	document.getElementById('calculator').style.display="block";
+	document.getElementById('overlay').style.display="block";
+}
+function close_calc(){
+
+	var all = document.getElementById('calculator_wrapper').childNodes
+
+	for (each in all){
+	    if(all[each].nodeType === 1){
+	        all[each].style.display = 'none';
+	    }
+	}
+}
+var shiftpressed=false;
+function onup(e){
+console.log(e.keyCode)
+	if(e.keyCode===16){
+		shiftpressed=false;
+		return false;
+	}
+	if(!shiftpressed){
+		if(e.keyCode===27){ // esc
+			key_p('C');
+			return false;
+		}
+		if(e.keyCode>=48 && e.keyCode<=57){ //0-9
+			key_p(e.keyCode - 48);
+			return false;
+		}
+		if(e.keyCode>=96 && e.keyCode<=105){//0-9
+			key_p(e.keyCode - 96);
+			return false;
+		}
+		if(e.keyCode===190){ // .
+			key_p('.');
+			return false;
+		}
+		if(e.keyCode===61||e.keyCode===107){ //+	
+			key_p('+');
+			return false;
+		}
+		if(e.keyCode===173||e.keyCode===109){ //-
+			key_p('-');
+			return false;
+		}
+		if(e.keyCode===56||e.keyCode===106){//*
+			key_p('*');
+			return false;
+		}
+		if(e.keyCode===191||e.keyCode===111){// /
+			key_p('/');
+			return false;
+		}
+		if(e.keyCode===190||e.keyCode==110){// .
+			key_p('.')
+			return false;
+		}
+		if(e.keyCode===13){// enter
+			key_p('=')
+			return false;
+		}
+	}else{
+		if(e.keyCode===61||e.keyCode===107){ // +
+			key_p('+');
+			return false;
+		}
+		if(e.keyCode===173||e.keyCode===109){ // -
+			key_p('-');
+			return false;
+		}
+		if(e.keyCode===56||e.keyCode===106){ // *
+			key_p('*');
+			return false;
+		}
+		if(e.keyCode===57){ // (
+			key_p('(');
+			return false;
+		}
+		if(e.keyCode===48){ // )
+			key_p(')');
+			return false;
+		}
+	}
 }
 
 
-$(function(){
+function ondown(e){
+	if(e.keyCode===16){
+		shiftpressed=true;
+		return false;
+	}
+}
 
+function correct_close_brackets(){
+	var count = 0;
 
-	//bind keyboard letters
-	$(document).keyup(function(e){
-		switch(e.which){
-
-
-			case 08:$('#del').trigger('click');break;
-			case 13:$('#equals').trigger('click');break;
-			case 27:$('#c').trigger('click');break;
-
-			case 48:case 49:case 50:case 51:case 52:
-			case 53:case 54:case 55:case 56:case 57:
-				$('#_'+e.which).trigger('click');
-				break;
-
-			case 67:$('#cos').trigger('click');break;
-			case 72:$('#hyp').trigger('click');break;
-			case 73:$('#inv').trigger('click');break;
-			case 76:$('#log').trigger('click');break;
-			case 77:$('#mem_p').trigger('click');break;
-			case 78:$('#mem_c').trigger('click');break;
-			case 80:$('#pi').trigger('click');break;
-			case 81:$('#sqrt').trigger('click');break;
-			case 83:$('#sin').trigger('click');break;
-			case 84:$('#tan').trigger('click');break;
-
-			default:
+	for(var i=0;i<compute_arr.length;i++){
+		if(compute_arr[i]==='('){
+			count++;
+		}else if(compute_arr[i]===')'){
+			count--;
 		}
-	});
+	}
 
+	if(count>0){
+		for(i=0;i<count;i++){
+			compute_arr.push('(')
+		}
 
-
-	$('.number').click(function(){
-		var n = $(this).children('span').text();
-
-
-
-
-		disp += n;
-
-		display(disp);
-	})
-
-
-	$('#equals').click(function(){
-
-		calc(disp);
-	})
-
-
-	$('#plus').click(function(){
-		disp += ' + ';
-		display(disp);
-	})
-	$('#minus').click(function(){
-		disp += ' - ';
-		display(disp);
-	})
-	$('#multiply').click(function(){
-		disp += ' '+times+' ';
-		display(disp);
-	})
-	$('#divide').click(function(){
-		disp += ' '+divide+' ';
-		display(disp);
-	})
-	$('#percent').click(function(){
-		disp += ' % ';
-		display(disp);
-	})
-	$('#c').click(function(){
-		disp='';
-		display(disp);
-		$('#result').children('span').text('0');
-	})
-
-
-
-	$('#sin').click(function(){
-		disp += ' Sin ';
-		display(disp);
-	})
-	$('#cos').click(function(){
-		disp += ' Cos ';
-		display(disp);
-	})
-	$('#tan').click(function(){
-		disp += ' Tan ';
-		display(disp);
-	})
-	$('#log').click(function(){
-		disp += ' Log ';
-		display(disp);
-	})
-	$('#e').click(function(){
-		disp += ' e ';
-		display(disp);
-	})
-	$('#hyp').click(function(){
-		disp += ' Hyp ';
-		display(disp);
-	})
-	$('#sqrt').click(function(){
-		disp += ' '+$('<div/>').html('&radic;').text()+' ';
-		display(disp);
-	})
-	$('#power').click(function(){
-		disp += ' ^ ';
-		display(disp);
-	})
-	$('#inv').click(function(){
-		disp += ' -1 ';
-		display(disp);
-	})
-	$('#square').click(function(){
-		disp += ' '+$('<div/>').html('&sup2;').text()+' ';
-		display(disp);
-	})
-	$('#open').click(function(){
-		disp += ' ( ';
-		display(disp);
-	})
-	$('#close').click(function(){
-		disp += ' ) ';
-		display(disp);
-	})
-})
-
+	}
+}
